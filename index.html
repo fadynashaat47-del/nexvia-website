@@ -63,8 +63,8 @@ footer{padding:30px 0;border-top:1px solid var(--line);color:var(--muted);font-s
 </div><div class="portfolio-note">هذه مشاريع concept تجريبية من NEXVIA وليست أعمالًا منفذة لعملاء.</div></div></section>
 <section class="about" id="about"><div class="container about-box"><div class="section-title"><div class="mini">ABOUT NEXVIA</div><h2>أفكار أبعد. تنفيذ أذكى.</h2></div><p>NEXVIA مشروع إبداعي في بدايته، هدفه يجمع الخدمات الرقمية والمنتجات الجاهزة تحت هوية واحدة. بنبدأ بخطوات صغيرة، ونهتم إن كل خدمة أو منتج نقدمه يكون واضح، مفيد، ومتقن.</p></div></section>
 <section id="contact"><div class="container"><div class="contact-box"><div><div class="mini" style="color:#c18aff;font:600 11px 'Space Grotesk';letter-spacing:3px">LET'S WORK TOGETHER</div><h2>عندك فكرة؟ ابدأ من هنا.</h2><p>اكتب تفاصيل بسيطة عن اللي محتاجه، وهيتجهز لك نص رسالة تقدر تبعته بنفسك.</p></div>
-<form class="form" id="contactForm"><input id="name" placeholder="اسمك" required><input id="contactWay" placeholder="وسيلة التواصل المناسبة" required><select id="service"><option value="">اختار الخدمة</option><option>تصميم جرافيكي</option><option>مونتاج فيديو</option><option>حلول رقمية</option><option>استفسار عن منتج رقمي</option><option>طلب آخر</option></select><input id="budget" placeholder="ميزانيتك (اختياري)"><textarea id="details" placeholder="احكيلنا عن فكرتك أو طلبك..." required></textarea><button class="btn" type="submit">جهّز رسالة الطلب ↗</button></form>
-</div><p class="hint">النموذج لا يرسل بيانات إلى خادم؛ هو يجهز نص الطلب محليًا لتنسخه وترسله بنفسك.</p></div></section>
+<form class="form" id="contactForm"><input id="name" placeholder="اسمك" required><input id="contactWay" placeholder="وسيلة التواصل المناسبة" required><select id="service"><option value="">اختار الخدمة</option><option>تصميم جرافيكي</option><option>مونتاج فيديو</option><option>حلول رقمية</option><option>استفسار عن منتج رقمي</option><option>طلب آخر</option></select><input id="budget" placeholder="ميزانيتك (اختياري)"><textarea id="details" placeholder="احكيلنا عن فكرتك أو طلبك..." required></textarea><button class="btn" type="submit">تأكيد الطلب عبر واتساب ↗</button></form>
+</div><p class="hint">بعد الضغط، هيفتح واتساب برسالة جاهزة فيها تفاصيل طلبك. راجعها واضغط إرسال.</p></div></section>
 </main>
 <footer><div class="container foot"><a class="brand" href="#home"><i class="logo-mark"></i><span>NEXVIA<small>DIGITAL CREATIVE HOUSE</small></span></a><span>Think Beyond. Create Ahead.</span><span>© 2026 NEXVIA · نسخة تجريبية</span></div></footer>
 <div class="toast" id="toast" role="status"></div>
@@ -72,12 +72,13 @@ footer{padding:30px 0;border-top:1px solid var(--line);color:var(--muted);font-s
 const menuBtn=document.getElementById('menuBtn'), nav=document.getElementById('navlinks');
 menuBtn.addEventListener('click',()=>nav.classList.toggle('open'));
 nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>nav.classList.remove('open')));
-document.getElementById('contactForm').addEventListener('submit',async e=>{
+document.getElementById('contactForm').addEventListener('submit',e=>{
  e.preventDefault();
  const v=id=>document.getElementById(id).value.trim();
  const message=`طلب جديد إلى NEXVIA\nالاسم: ${v('name')}\nوسيلة التواصل: ${v('contactWay')}\nالخدمة: ${v('service')}\nالميزانية: ${v('budget')||'غير محددة'}\nالتفاصيل: ${v('details')}`;
- try{await navigator.clipboard.writeText(message);showToast('تم تجهيز الطلب ونسخ نصه. ابعته من وسيلة التواصل اللي تختارها.')}
- catch{showToast('تم تجهيز نص الطلب. يمكنك نسخه يدويًا من الرسالة التالية: '+message)}
+ const whatsappNumber='201274497473';
+ const whatsappUrl=`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+ window.location.href=whatsappUrl;
 });
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';setTimeout(()=>t.style.display='none',6500)}
 </script>
